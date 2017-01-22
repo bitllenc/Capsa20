@@ -1,6 +1,7 @@
 #include <Capsa20.h>
 
 #define RAMON_HUB		170284
+#define ALBA			160184
 
 #define ST_1_INICI              1
 #define ST_2_INDICACIO_CANCO    2 
