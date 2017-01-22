@@ -1,7 +1,5 @@
 #include <Capsa20.h>
 
-#define ACABEM_JA               69
-
 #define ST_1_INICI              1
 #define ST_2_INDICACIO_CANCO    2 
 #define ST_3_REPRODUIR_CANCO    3
