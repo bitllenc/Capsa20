@@ -10,6 +10,7 @@
 #define ST_6_EQUIVOCACIO        6
 #define ST_10_DESBLOQUEIG       7
 #define ST_11_DESBLOQUEJAT      8
+#define USELESS                 69
 
 #define TEMPS_OBERTURA  10000 //ms
 #define COMBINACIO_SECRETA  19 //0001_0011
