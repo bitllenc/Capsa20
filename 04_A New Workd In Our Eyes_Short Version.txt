@@ -1,0 +1,4 @@
+// A new world in your eyes. short ver
+int numNotes4 = 32;
+char NOTES4[32] = {La4, La4, La4, Si4, La4, La4, Sol4, La4, La4, La4, La4, Si4, La4, La4, Si4, Si4, Si4, La4, Sol4, La4, Sol4, La4, Sol4, Si4, La4, La4, La4, Si4, Si4, La4, La4, Sol4};
+unsigned int TEMPS4[32] = {NE, CO, NE, NE, CO, NE, NE, NE, CO, NE, SC, CO, CO, NE, CO, CO, SC, NE, SC, CO, SC, CO, SC, NE, CO, CO, CO, CO, CO, CO, CO, BL};

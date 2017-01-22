@@ -1,0 +1,4 @@
+// Wedding March
+int numNotes = 18;
+char NOTES[18]         = {Re4, Sol4, Sol4, Sol4, Re4, La4, FaS4, Sol4, Re4, Sol4, Do5, Do5, Si4, La4, Sol4, FaS4, Sol4, La4};
+unsigned int TEMPS[18] = {NE,  COp,  SC,   BL,   NE,  COp, SC,   BL,   NE,  COp,  SC,  NE,  COp, SC,   NE,   COp,  SC,   BL};

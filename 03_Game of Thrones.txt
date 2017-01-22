@@ -1,0 +1,4 @@
+Game of Thrones
+int numNotes3 = 39;
+char NOTES3[39] = {La4, Re4, Fa4, Sol4, La4, Re4, Fa4, Sol4, La4, Re4, Fa4, Sol4, La4, Re4, Fa4, Sol4, La4, Re4, Fa4, Sol4, La4, Re4, Fa4, Sol4, Sol4, Do4, Fa4, Mi4, Sol4, Do4, La4, Re4, Mi4, Fa4, Sol4, Do4, Fa4, Mi4, Re4};
+unsigned int TEMPS3[39] = {CO, CO, SC, SC, CO, CO, SC, SC, CO, CO, SC, SC, CO, CO, SC, SC, BL, BL, SC, SC, NE, NE, SC, SC, BL, BL, SC, SC, NE, BL, BL, BL, CO, CO, NE, BL, CO, CO, BL};

@@ -1,0 +1,199 @@
+#include <Capsa20.h>
+
+#define ST_1_INICI              1
+#define ST_2_INDICACIO_CANCO    2 
+#define ST_3_REPRODUIR_CANCO    3
+#define ST_4_SEQUENCIA_REPRO    4
+#define ST_41_SEQUENCIA_ESCOLTA 41
+#define ST_5_CANCO_CORRECTA     5
+#define ST_6_EQUIVOCACIO        6
+#define ST_10_DESBLOQUEIG       7
+#define ST_11_DESBLOQUEJAT      8
+
+#define TEMPS_OBERTURA  5000 //ms
+#define COMBINACIO_SECRETA 85 //0101_0101
+#define MAX_CANCONS 3  //Nombre de cançons que tenim
+
+#define pLOCK  1
+#define pALTAVEU 4
+#define pLED_Do  A0
+#define pLED_Re  A1
+#define pLED_Mi  A2
+#define pLED_Fa  A3
+#define pLED_Sol A4
+#define pLED_La  A5
+#define pLED_Si  A6
+#define pSW_Do   6
+#define pSW_Re 7
+#define pSW_Mi  8
+#define pSW_Fa  9
+#define pSW_Sol 10
+#define pSW_La  11
+#define pSW_Si  12
+
+/*
+typedef struct tNotes {
+	unsigned int freq;
+	byte led;	
+}tNota;
+*/
+
+byte SWpremuts;
+byte pSW[7] = {pSW_Do,   pSW_Re,  pSW_Mi,  pSW_Fa,  pSW_Sol,  pSW_La,  pSW_Si};
+byte pLED[7] = {pLED_Do, pLED_Re, pLED_Mi, pLED_Fa, pLED_Sol, pLED_La, pLED_Si};
+
+int idxCanco = 0;
+int idxNota = 0;
+int Estat, EstatSeguent;
+
+Nota N;
+//char NOTES[100];
+//char TEMPS[100];
+int tempo = 100;
+int numNotes = 69;
+char NOTES[69] = {Mi4, La4, La4, La4, Mi4, Si4, La4, Si4, Mi4, Si4, La4, Si4, La4, Si4, Sol4, La4, Sol4, Sol4, Si4, La4, Mi4, Si4, Si4, Sol4, Mi4, Si4, La4, Sol4, Fa4, La4, Si4, Si4, Si4, La4, Mi4, Si4, La4, Fa4, Si4, Si4, Si4, La4, Sol4, Sol4, Fa4, La4, Si4, Sol4, Si4, Si4, Si4, Si4, Si4, Sol4, Sol4, Mi4, La4, Si4, Sol4, Si4, Si4, Si4, Si4, Si4, La4, Si4, La4, Sol4, Fa4};
+unsigned int TEMPS[69] = {NE, SC, SC, BL, NE, SC, SC, BL, NE, SC, SC, NE, SC, SC, SC, SC, SC, SC, SC, BL, NE, SC, SC, BL, NE, SC, SC, BL, NE, SC, SC, NE, SC, SC, NE, SC, SC, NE, NE, NE, SC, SC, NE, NE, NE, SC, SC, SC, SC, NE, NE, SC, SC, NE, NE, NE, SC, SC, NE, NE, NE, SC, SC, NE, NE, SC, SC, SC, SC};
+
+
+void setup(){
+   N.InitTaula();
+   Serial.begin(9600);
+ 
+  Estat = ST_1_INICI; //Ens posem al primer estat de la màquina
+ digitalWrite(pLOCK, LOW);  //Assegurem que la capsa està tancada!
+ 
+}
+
+void loop(){
+
+  
+  //Gestió de l'estat següent
+  if (Estat == ST_1_INICI) {
+    if (SWpremuts == COMBINACIO_SECRETA){
+      EstatSeguent = ST_10_DESBLOQUEIG;
+    } else {
+      EstatSeguent = ST_2_INDICACIO_CANCO;
+    }
+    
+  } else if (Estat == ST_2_INDICACIO_CANCO) {
+      EstatSeguent = ST_3_REPRODUIR_CANCO;
+  } else if (Estat == ST_3_REPRODUIR_CANCO) {
+      EstatSeguent = ST_4_SEQUENCIA_REPRO;
+  } else if (Estat == ST_4_SEQUENCIA_REPRO) {
+    
+  } else if (Estat == ST_41_SEQUENCIA_ESCOLTA) {
+    
+  } else if (Estat == ST_5_CANCO_CORRECTA) {
+    
+  } else if (Estat == ST_6_EQUIVOCACIO) {
+    
+  } else if (Estat == ST_10_DESBLOQUEIG) {
+
+  } else {
+    EstatSeguent = ST_1_INICI;
+  }
+  
+
+      
+  //Accions a l'estat actual
+  if (Estat == ST_1_INICI) {
+    Serial.println(Estat);
+    //Musiqueta de benvinguda
+    reprodueixSintonia(1);
+  } else if (Estat == ST_2_INDICACIO_CANCO) {
+        Serial.println(Estat);
+    //Nº de LEDs encesos
+  } else if (Estat == ST_3_REPRODUIR_CANCO) {
+        Serial.println(Estat);
+    //Reproduir cançó sencera
+    reprodueixCanco(NOTES,TEMPS,numNotes);
+    
+  } else if (Estat == ST_4_SEQUENCIA_REPRO) {
+        Serial.println(Estat);
+    //Reproduir notes fins a la nota on s'hagi avançat
+  } else if (Estat == ST_41_SEQUENCIA_ESCOLTA) {    
+        Serial.println(Estat);
+    //Escolta les polsacions i comprova que siguin correctes
+      //Actualització dels botons polsats
+      SWpremuts = LlegeixPolsadors();
+      
+  } else if (Estat == ST_5_CANCO_CORRECTA) {
+        Serial.println(Estat);
+    //Si completa la cançó. Musiqueta de correcte!
+    reprodueixSintonia(2);
+    idxNota = 0;    //Reinicia la nota
+    idxCanco++;    //Es va a la següent cançó!
+  } else if (Estat == ST_6_EQUIVOCACIO) {
+        Serial.println(Estat);
+    //Si s'equivoca. Musiqueta d'incorrecte!
+    reprodueixSintonia(3);
+    idxNota = 0;  //Reinicia la canco
+  } else if (Estat == ST_10_DESBLOQUEIG) {
+        Serial.println(Estat);
+    //En completar totes les cançons desbloqueig i musiqueta
+    digitalWrite(pLOCK, HIGH);  //Es debloqueja
+    reprodueixSintonia(4);
+    digitalWrite(pLOCK, LOW);  //Es torna a bloquejar
+  } else {
+        Serial.println(Estat);
+    //Wow! Com has arribat fins aquí? No facis res!
+  }
+  
+        //Actualitza l'estat de les entrades
+      Estat = EstatSeguent;
+}
+
+
+void reprodueixCanco(char * canco, unsigned int * temps, int num_notes){
+  unsigned int idxN;
+  
+  for (idxN=0; idxN<num_notes; idxN++){
+    Serial.print("Nota: ");
+    Serial.print(idxN);
+    Serial.print("  -  Freq: ");
+    Serial.print(N.freq(canco[idxN]));
+    Serial.print("  -  Durada: ");
+    Serial.println(temps[idxN]);
+    
+    tone(pALTAVEU, N.freq(canco[idxN])); //Es reprodueix el to, T[temps[idxN]]);
+    digitalWrite(pSW[N.led(canco[idxN])], HIGH);  //S'il.lumina el LED
+    delay(temps[idxN]);  //Es deixa passar el temps
+    noTone(pALTAVEU);  //S'apaga el so
+    digitalWrite(pSW[N.led(canco[idxN])], HIGH);  //S'apaga el LED
+    delay(10);  //Temps de separacio entre notes
+  }
+}
+
+
+
+byte LlegeixPolsadors(void){
+  int idx;
+  byte  polsadors = 0;
+  
+  for (idx=0;idx<=7;idx++){
+    if (digitalRead(pSW[idx])){
+     bitSet(polsadors,idx); 
+    }
+  }
+  return polsadors;
+}
+    
+void reprodueixSintonia(byte idxSintonia){
+   switch (idxSintonia){
+     case 1:  
+       tone(pALTAVEU, 440);
+       delay(1000);
+       noTone(pALTAVEU);
+     break;
+     case 2:
+       tone(pALTAVEU, 880);
+       delay(1000);
+       noTone(pALTAVEU);
+     break;
+     case 3:
+       tone(pALTAVEU, 300);
+       delay(1000);
+       noTone(pALTAVEU);
+     break;
+   }
+};

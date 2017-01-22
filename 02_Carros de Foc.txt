@@ -1,0 +1,4 @@
+// Carros Foc
+int numNotes2 = 52;
+char NOTES2[52] = {Do4, Fa4, Sol4, La4, Sol4, Mi4, Do4, Fa4, Sol4, La4, Sol4, Do4, Fa4, Sol4, La4, Sol4, Mi4, Mi4, Fa4, Mi4, Do4, Do4, Si4, Si4, La4, Sol4, Si4, Sol4, La4, Fa4, Sol4, Si4, Si4, La4, Sol4, Si4, Sol4, Do4, Si4, Si4, La4, Sol4, Si4, Sol4, La4, Fa4, Sol4, Mi4, Fa4, Mi4, Do4, Do4};
+unsigned int TEMPS2[52] = {CO, CO, CO, CO, NE, BL, CO, CO, CO, CO, BL, CO, CO, CO, CO, NE, BL, CO, CO, CO, CO, BL, CO, CO, CO, CO, NE, CO, NE, CO, NE, CO, CO, CO, CO, NE, NE, CO, CO, CO, CO, CO, NE, CO, NE, CO, NE, CO, CO, CO, CO, BL};

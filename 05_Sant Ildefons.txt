@@ -1,0 +1,4 @@
+// Sant Ildefons
+int numNotes5 = 9;
+char NOTES5[9] = {La4, La4, La4, La4, La4, Si4, La4, La4, Fa4};
+unsigned int TEMPS5[9] = {CO, CO, CO, CO, CO, RO, CO, NE, BL};
