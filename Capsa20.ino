@@ -3,6 +3,8 @@
 #define RAMON_HUB		170284
 #define ALBA			160184
 #define CODI			12345
+#define COSA			54321
+
 
 #define ST_1_INICI              1
 #define ST_2_INDICACIO_CANCO    2 
